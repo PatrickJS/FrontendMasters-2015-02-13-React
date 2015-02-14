@@ -22,12 +22,23 @@ var DATA = {
 };
 
 var Menu = React.createClass({
-  render () {
-    return null;
+  render() {
+
+    var list = DATA.items
+    .filter(item => item.type === 'mexican')
+    .sort(sortBy('name'))
+    .map(item => <li key={item.id}>{item.name}</li>);
+
+    return (
+      <div>
+        <h1>{DATA.title}</h1>
+        <ul>
+          {list}
+        </ul>
+      </div>
+    );
   }
 });
 
-React.render(<Menu/>, document.body, () => {
-  require('./tests').run();
-});
+React.render(<Menu/>, document.body, require('./tests').run);
 
