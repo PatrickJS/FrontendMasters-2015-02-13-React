@@ -5,7 +5,13 @@ var ServerActionCreators = {
   loadedContacts (contacts) {
     AppDispatcher.handleServerAction({
       type: ActionTypes.CONTACTS_LOADED,
-      contacts: contacts
+      contacts
+    });
+  },
+  deleteContact(id) {
+    AppDispatcher.handleServerAction({
+      type: ActionTypes.CONTACT_DELETED,
+      id
     });
   }
 };

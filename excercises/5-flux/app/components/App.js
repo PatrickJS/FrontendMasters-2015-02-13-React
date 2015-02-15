@@ -3,26 +3,38 @@ var ContactsStore = require('../stores/ContactsStore');
 var ViewActionCreators = require('../actions/ViewActionCreators');
 
 var App = React.createClass({
-  getInitialState () {
+
+  getInitialState() {
     return ContactsStore.getState();
   },
 
-  componentDidMount () {
+  componentDidMount() {
     ContactsStore.addChangeListener(this.handleStoreChange);
     ViewActionCreators.loadContacts();
   },
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     ContactsStore.removeChangeListener(this.handleStoreChange);
   },
 
-  handleStoreChange () {
+  handleStoreChange() {
     this.setState(ContactsStore.getState());
   },
 
-  renderContacts () {
-    return this.state.contacts.map((contact) => {
-      return <li>{contact.first} {contact.last}</li>;
+  deleteContact(id) {
+    ViewActionCreators.deleteContact(id);
+  },
+
+  renderContacts() {
+
+    return this.state.contacts.map((contact, index) => {
+      var deleteHandler = this.deleteContact.bind(this, contact.id);
+      var button = <button onClick={deleteHandler}>Delete</button>;
+      return (
+        <li key={contact.id}>
+          {contact.first} {contact.last} {button}
+        </li>
+      );
     });
   },
 

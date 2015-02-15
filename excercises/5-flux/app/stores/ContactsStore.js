@@ -30,15 +30,27 @@ var ContactsStore = {
   }
 };
 
-ContactsStore.dispatchToken = AppDispatcher.register((payload) => {
-  var { action } = payload;
-  console.log(action.type);
-  if (action.type === ActionTypes.CONTACTS_LOADED) {
+ContactsStore.dispatchToken = AppDispatcher.register(payload => {
+  var { action: {type, contacts, id} } = payload;
+
+  console.log(type);
+  if (type === ActionTypes.CONTACTS_LOADED) {
     setState({
       loaded: true,
-      contacts: action.contacts
+      contacts
     });
   }
+  else if (type === ActionTypes.CONTACT_DELETED) {
+    setState({
+      loaded: true,
+      contacts: (
+        state
+        .contacts
+        .filter(contact => contact.id !== id)
+      )
+    });
+  }
+
 });
 
 module.exports = ContactsStore;

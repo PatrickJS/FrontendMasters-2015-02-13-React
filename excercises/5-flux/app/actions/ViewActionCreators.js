@@ -8,6 +8,12 @@ var ViewActionCreators = {
       type: ActionTypes.LOAD_CONTACTS
     });
     ApiUtil.loadContacts();
+  },
+  deleteContact(id) {
+    AppDispatcher.handleViewAction({
+      type: ActionTypes.DELETE_CONTACT
+    });
+    ApiUtil.deleteContact(id);
   }
 };
 
